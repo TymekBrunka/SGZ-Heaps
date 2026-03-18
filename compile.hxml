@@ -1,0 +1,6 @@
+-cp src
+-lib heaps
+-lib format
+-lib hlsdl
+-hl main.hl
+-main Main
