@@ -1,5 +1,6 @@
 -cp src
 -lib heaps
+-D resourcesPath=assets
 -lib format
 -lib hlsdl
 -hl main.hl
