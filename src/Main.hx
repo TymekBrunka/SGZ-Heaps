@@ -2,7 +2,7 @@ import hxd.res.Loader;
 import hxd.fs.LocalFileSystem;
 
 class Main extends hxd.App {
-	public var tile: h2d.Bitmap;
+	public var tile:h2d.Bitmap;
 
 	override function init() {
 		super.init();
