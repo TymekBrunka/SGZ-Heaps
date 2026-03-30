@@ -6,15 +6,19 @@ class Main extends hxd.App {
 	public var mainTexture:h2d.Tile;
 	public var sprites:h2d.SpriteBatch.SpriteBatch;
 	public var spaceship:h2d.SpriteBatch.BasicElement;
-	// public var playerObj:h2d.Object;
 
 	override function init() {
 		super.init();
+		s2d.cameras[0].layerVisible = (idx) -> idx != 1;
+
+		var uiCamera = new h2d.Camera.Camera();
+		uiCamera.layerVisible = (idx) -> idx == 1;
+		s2d.addCamera(uiCamera, 1);
 
 		var font:h2d.Font = hxd.res.DefaultFont.get();
 		var tf = new h2d.Text(font);
 		tf.text = "Hello World\nHeaps is great!";
-		s2d.addChild(tf);
+		s2d.add(tf, 1);
 
 		mainTexture = hxd.Res.textures.spaceship.toTile();
 		sprites = new h2d.SpriteBatch.SpriteBatch(mainTexture);
@@ -25,22 +29,22 @@ class Main extends hxd.App {
 		// s2d.addChild(playerObj);
 
 		spaceship = new h2d.SpriteBatch.BasicElement(mainTexture.center());
-		spaceship.scale = 5;
+		spaceship.scale = 2;
 		spaceship.rotation = 1.57;
 		spaceship.x = 500;
 		spaceship.y = 500;
 		// spaceship.vx = 0.5;
 		// spaceship.vy = 0.5;
 		sprites.add(spaceship);
-		s2d.addChild(sprites);
+		s2d.add(sprites, 0);
+
+		s2d.camera.anchorX = 0.5;
+		s2d.camera.anchorY = 0.5;
 	}
 
 	override function update(dt:Float) {
-		s2d.camera.x = spaceship.x;
-		s2d.camera.y = spaceship.y;
-		// s2d.camera.follow = playerObj;
-		s2d.camera.anchorX = 0.5;
-		s2d.camera.anchorY = 0.5;
+		// s2d.camera.x = spaceship.x;
+		// s2d.camera.y = spaceship.y;
 	}
 
 	static function main() {
