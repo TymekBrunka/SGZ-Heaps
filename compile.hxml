@@ -3,5 +3,6 @@
 -D resourcesPath=assets
 -lib format
 -lib hlsdl
+-lib vector-math
 -hl main.hl
 -main Main

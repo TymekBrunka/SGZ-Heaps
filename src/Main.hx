@@ -3,9 +3,9 @@ import hxd.res.Loader;
 import hxd.fs.LocalFileSystem;
 
 class Main extends hxd.App {
-	public var mainTexture:h2d.Tile;
-	public var sprites:h2d.SpriteBatch.SpriteBatch;
-	public var spaceship:h2d.SpriteBatch.BasicElement;
+	public static var mainTexture:h2d.Tile;
+	public static var sprites:h2d.SpriteBatch.SpriteBatch;
+	public static var player: PlayerControler;
 
 	override function init() {
 		super.init();
@@ -25,17 +25,11 @@ class Main extends hxd.App {
 		sprites.hasRotationScale = true;
 		sprites.hasUpdate = true;
 
+		player = new PlayerControler(mainTexture, sprites);
+
 		// playerObj = new h2d.Object();
 		// s2d.addChild(playerObj);
 
-		spaceship = new h2d.SpriteBatch.BasicElement(mainTexture.center());
-		spaceship.scale = 2;
-		spaceship.rotation = 1.57;
-		spaceship.x = 500;
-		spaceship.y = 500;
-		// spaceship.vx = 0.5;
-		// spaceship.vy = 0.5;
-		sprites.add(spaceship);
 		s2d.add(sprites, 0);
 
 		s2d.camera.anchorX = 0.5;
@@ -45,6 +39,7 @@ class Main extends hxd.App {
 	override function update(dt:Float) {
 		// s2d.camera.x = spaceship.x;
 		// s2d.camera.y = spaceship.y;
+		player.update(dt);		
 	}
 
 	static function main() {
