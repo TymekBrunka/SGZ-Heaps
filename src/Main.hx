@@ -5,7 +5,8 @@ import hxd.fs.LocalFileSystem;
 class Main extends hxd.App {
 	public static var mainTexture:h2d.Tile;
 	public static var sprites:h2d.SpriteBatch.SpriteBatch;
-	public static var player: PlayerControler;
+	public static var player:PlayerControler;
+	public static var enemies:Array<Enemy>;
 
 	override function init() {
 		super.init();
@@ -30,6 +31,9 @@ class Main extends hxd.App {
 		// playerObj = new h2d.Object();
 		// s2d.addChild(playerObj);
 
+		var enemy = new Enemy(mainTexture, sprites, 0, 0);
+		enemies.push(enemy);
+
 		s2d.add(sprites, 0);
 
 		s2d.camera.anchorX = 0.5;
@@ -39,7 +43,10 @@ class Main extends hxd.App {
 	override function update(dt:Float) {
 		// s2d.camera.x = spaceship.x;
 		// s2d.camera.y = spaceship.y;
-		player.update(dt);		
+		player.update(dt);
+		for (i in enemies) {
+			i.update();
+		}
 	}
 
 	static function main() {

@@ -3,7 +3,7 @@ import hxd.Key;
 import VectorMath;
 
 class PlayerControler {
-	public var spaceship:h2d.SpriteBatch.BasicElement;
+	public static var spaceship:h2d.SpriteBatch.BasicElement;
     public var speed:Float;
     public var velocity:Vec2;
     public var orientation:Float;
@@ -19,12 +19,28 @@ class PlayerControler {
 		sprites.add(spaceship);
 	}
 
+    function sign(x:Float) {
+        if (x == 0) {
+            return 0.0;
+        }
+        return x / Math.abs(x);
+    }
+
+    function clamp(min:Float, max:Float, x:Float) {
+        if (x < min) {
+            return min;
+        } else if (x > max) {
+            return max;
+        }
+        return x;
+    }
+
 	public function update(dt:Float) {
 		if (Key.isDown(hxd.Key.W)) {
-            speed += dt * 100;
+            speed += dt * 300;
         }
         if (Key.isDown(hxd.Key.S)) {
-            speed -= dt * 100;
+            speed -= dt * 300;
         }
         if (Key.isDown(hxd.Key.A)) {
             orientation -= dt * 2;
@@ -32,7 +48,8 @@ class PlayerControler {
         if (Key.isDown(hxd.Key.D)) {
             orientation += dt * 2;
         }
-        speed += Math.min(0, dt * 20 * (speed / Math.abs(speed)));
+        speed -= dt * 100 * sign(speed);
+        speed = clamp(-100, 300, speed);
         velocity = speed * vec2(Math.sin(orientation), -Math.cos(orientation));
         spaceship.rotation = orientation;
 		spaceship.vx = velocity.x;
