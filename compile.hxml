@@ -3,6 +3,9 @@
 -D resourcesPath=assets
 -lib format
 -lib hlsdl
--lib vector-math
+-lib hxmath
+-lib echo
+-D ECHO_USE_HXMATH
+--debug
 -hl main.hl
 -main Main

@@ -1,14 +1,32 @@
 import hxd.Key;
 import hxd.res.Loader;
 import hxd.fs.LocalFileSystem;
+import echo.util.Debug.HeapsDebug;
+import echo.World;
 
 class Main extends hxd.App {
+	public static var world:World;
+
+	#if debug
+	public var echo_debug_drawer:HeapsDebug;
+	#end
+
 	public static var mainTexture:h2d.Tile;
 	public static var sprites:h2d.SpriteBatch.SpriteBatch;
 	public static var player:PlayerControler;
-	public static var enemies:Array<Enemy>;
+	public static var enemies:Array<Enemy> = [];
 
 	override function init() {
+		world = new World({
+			width: engine.width,
+			height: engine.height,
+			gravity_y: 20
+		});
+
+		#if debug
+		echo_debug_drawer = new HeapsDebug(s2d);
+		#end
+
 		super.init();
 		s2d.cameras[0].layerVisible = (idx) -> idx != 1;
 
@@ -31,8 +49,10 @@ class Main extends hxd.App {
 		// playerObj = new h2d.Object();
 		// s2d.addChild(playerObj);
 
-		var enemy = new Enemy(mainTexture, sprites, 0, 0);
+		var enemy = new Enemy(hxd.Res.textures.zombie_armored.toTile(), sprites, 0, 0);
+		var enemy2 = new Enemy(hxd.Res.textures.zombie_tough.toTile(), sprites, 100, -100);
 		enemies.push(enemy);
+		enemies.push(enemy2);
 
 		s2d.add(sprites, 0);
 
@@ -41,12 +61,29 @@ class Main extends hxd.App {
 	}
 
 	override function update(dt:Float) {
-		// s2d.camera.x = spaceship.x;
-		// s2d.camera.y = spaceship.y;
+		s2d.camera.x = PlayerControler.spaceship.x;
+		s2d.camera.y = PlayerControler.spaceship.y;
 		player.update(dt);
 		for (i in enemies) {
 			i.update();
 		}
+
+		world.step(dt);
+
+		for (i in enemies) {
+			i.sprite.x = i.body.x;
+			i.sprite.y = i.body.y;
+			i.sprite.rotation = i.body.rotation;
+		}
+
+		PlayerControler.spaceship.x = PlayerControler.body.x;
+		PlayerControler.spaceship.y = PlayerControler.body.y;
+		PlayerControler.spaceship.rotation = PlayerControler.body.rotation;
+
+		#if debug
+		if (Key.isPressed(Key.QWERTY_TILDE)) echo_debug_drawer.canvas.visible = !echo_debug_drawer.canvas.visible;
+		echo_debug_drawer.draw(world);
+		#end
 	}
 
 	static function main() {
