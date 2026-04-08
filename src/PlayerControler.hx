@@ -27,6 +27,12 @@ class PlayerControler {
 		});
 		body.x = 200;
 		body.y = 200;
+
+		body.on_move = (x, y) -> {
+			spaceship.x = x;
+			spaceship.y = y;
+		};
+		body.on_rotate = (rotation) -> spaceship.rotation = rotation;
 	}
 
 	function sign(x:Float) {

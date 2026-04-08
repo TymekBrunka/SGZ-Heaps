@@ -49,8 +49,8 @@ class Main extends hxd.App {
 		// playerObj = new h2d.Object();
 		// s2d.addChild(playerObj);
 
-		var enemy = new Enemy(hxd.Res.textures.zombie_armored.toTile(), sprites, 0, 0);
-		var enemy2 = new Enemy(hxd.Res.textures.zombie_tough.toTile(), sprites, 100, -100);
+		var enemy = new ZombieArmored(sprites, 0, 0);
+		var enemy2 = new ZombieTough(sprites, 100, -100);
 		enemies.push(enemy);
 		enemies.push(enemy2);
 
@@ -58,6 +58,8 @@ class Main extends hxd.App {
 
 		s2d.camera.anchorX = 0.5;
 		s2d.camera.anchorY = 0.5;
+
+		world.listen({separate: true});
 	}
 
 	override function update(dt:Float) {
@@ -69,16 +71,6 @@ class Main extends hxd.App {
 		}
 
 		world.step(dt);
-
-		for (i in enemies) {
-			i.sprite.x = i.body.x;
-			i.sprite.y = i.body.y;
-			i.sprite.rotation = i.body.rotation;
-		}
-
-		PlayerControler.spaceship.x = PlayerControler.body.x;
-		PlayerControler.spaceship.y = PlayerControler.body.y;
-		PlayerControler.spaceship.rotation = PlayerControler.body.rotation;
 
 		#if debug
 		if (Key.isPressed(Key.QWERTY_TILDE)) echo_debug_drawer.canvas.visible = !echo_debug_drawer.canvas.visible;
