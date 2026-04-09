@@ -15,6 +15,7 @@ class Main extends hxd.App {
 	public static var sprites:h2d.SpriteBatch.SpriteBatch;
 	public static var player:PlayerControler;
 	public static var enemies:Array<Enemy> = [];
+	public static var music:hxd.res.Sound;
 
 	override function init() {
 		world = new World({
@@ -49,7 +50,7 @@ class Main extends hxd.App {
 		// playerObj = new h2d.Object();
 		// s2d.addChild(playerObj);
 
-		var enemy = new ZombieArmored(sprites, 0, 0);
+		var enemy = new ZombieRegular(sprites, 0, 0);
 		var enemy2 = new ZombieTough(sprites, 100, -100);
 		enemies.push(enemy);
 		enemies.push(enemy2);
@@ -60,6 +61,9 @@ class Main extends hxd.App {
 		s2d.camera.anchorY = 0.5;
 
 		world.listen({separate: true});
+
+		music = hxd.Res.sound.PrismTrollPilgrammedOST;
+		music.play(true);
 	}
 
 	override function update(dt:Float) {

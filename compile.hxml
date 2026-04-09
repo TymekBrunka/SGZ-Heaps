@@ -6,6 +6,7 @@
 -lib hxmath
 -lib echo
 -D ECHO_USE_HXMATH
+-D heaps_enable_hl_mp3
 --debug
 -hl main.hl
 -main Main

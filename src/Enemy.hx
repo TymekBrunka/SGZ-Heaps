@@ -2,12 +2,12 @@ import echo.Body;
 import PlayerControler;
 import hxmath.math.Vector2;
 
-class Enemy {
+abstract class Enemy {
 	public static var mainTexture:Null<h2d.Tile>;
 	public var sprite:h2d.SpriteBatch.BasicElement;
 	public var body:Body;
 	
-	public abstract function classSize();
+	public abstract function classSize():Float;
 
 	public abstract function classTexture():h2d.Tile;
 
